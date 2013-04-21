@@ -12,10 +12,10 @@ def joinit(iterable, delimiter):
 		yield x
 
 def makeVec3(vector):
-	return "(Vector3 (%f) (%f) (%f))" % (vector.x, vector.y, vector.z)
+	return "(Vector3 {x3 = %f, y3 = %f, z3 = %f})" % (vector.x, vector.y, vector.z)
 
 def makeVec2(vector):
-	return "(Vector2 (%f) (%f))" % (vector.x, vector.y)
+	return "(Vector2 {x2 = %f, y2 = %f})" % (vector.x, vector.y)
 
 def makeVertex(n, data):
 	pos = makeVec3(data.vertices[n].co)
@@ -32,8 +32,8 @@ for p in mesh.polygons:
 	vstrs = []
 	for v in p.vertices:
 		vstrs.append(makeVertex(v, mesh))
-	tstr = "(Triangle " + " ".join(vstrs) + ")"
+	tstr = "Triangle " + " ".join(vstrs)
 	tstrs.append(tstr)
 
-meshstr = "(Mesh (Vector3 0 (-5) (-5)) [%s])" % (", ".join(tstrs))
+meshstr = '(ShapeRep "Mesh" "Mesh (Vector3 {x3 = 0.0, y3 = 0.0, z3 = 0.0}) [%s]")' % (", ".join(tstrs))
 print(meshstr)
