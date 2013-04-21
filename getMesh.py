@@ -17,10 +17,10 @@ def makeVec3(vector):
 def makeVec2(vector):
 	return "(Vector2 (%f) (%f))" % (vector.x, vector.y)
 
-def makeVertex(vertex):
-	pos = makeVec3(vertex.co)
-	norm = makeVec3(vertex.normal)
-	uv = "(Vector2 0 0)"
+def makeVertex(n, data):
+	pos = makeVec3(data.vertices[n].co)
+	norm = makeVec3(data.vertices[n].normal)
+	uv = makeVec2(data.uv_layers[0].data[n].uv)
 	vstr = "(Vertex %s %s %s)" % (pos, norm, uv)
 	return vstr
 
@@ -31,7 +31,7 @@ for p in mesh.polygons:
 		raise Exception("Not triangle enough: %d" % (len(p.vertices)))
 	vstrs = []
 	for v in p.vertices:
-		vstrs.append(makeVertex(mesh.vertices[v]))
+		vstrs.append(makeVertex(v, mesh))
 	tstr = "(Triangle " + " ".join(vstrs) + ")"
 	tstrs.append(tstr)
 
